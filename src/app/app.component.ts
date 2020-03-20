@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
-interface IUser {
-  id: number;
-  name: string;
-}
+import { User } from './interface/user';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +12,8 @@ interface IUser {
 export class AppComponent {
   title = 'okazu-manager';
 
-  userCollection: AngularFirestoreCollection<IUser>;
-  users: Observable<IUser[]>;
+  userCollection: AngularFirestoreCollection<User>;
+  users: Observable<User[]>;
 
   constructor(db: AngularFirestore) {
     this.userCollection = db.collection('users');
