@@ -7,8 +7,10 @@
 </div>
 <h2>Here are Firebase input/output </h2>
 
-<ul *ngFor="let user of users | async">
-  <li>{{ user.name }}</li>
-</ul>
+<div class="db">
+  <ul *ngFor="let user of users | async">
+    <li>{{ user.name }}</li>
+  </ul>
+</div>
 
 <button mat-button>Click me!</button>
