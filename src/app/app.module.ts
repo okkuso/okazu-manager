@@ -9,7 +9,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
-import { FavListComponent } from './fav-list/fav-list.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
@@ -17,12 +16,12 @@ import { TopHeaderComponent } from './top-header/top-header.component';
 import { TopHeaderContainerComponent } from './top-header-container/top-header-container.component';
 import { TopBodyComponent } from './top-body/top-body.component';
 import { TopBodyContainerComponent } from './top-body-container/top-body-container.component';
+import { CommonService } from './services/common.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    FavListComponent,
     TopHeaderComponent,
     TopHeaderContainerComponent,
     TopBodyComponent,
@@ -38,7 +37,7 @@ import { TopBodyContainerComponent } from './top-body-container/top-body-contain
     AngularFireAuthGuardModule,
     AppRoutingModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

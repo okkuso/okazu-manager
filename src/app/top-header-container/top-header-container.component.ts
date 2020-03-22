@@ -3,8 +3,10 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-top-header-container',
-  templateUrl: './top-header-container.component.html',
-  styleUrls: ['./top-header-container.component.css']
+  template: `
+    <!-- 子コンポーネントであるTopHeaderComponentからイベントをキャッチしたら、logoutメソッドを呼ぶ -->
+    <app-top-header (topHeaderEvent)="logout()"></app-top-header>
+  `,
 })
 export class TopHeaderContainerComponent implements OnInit {
 

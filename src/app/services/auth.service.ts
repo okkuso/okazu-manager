@@ -29,4 +29,10 @@ export class AuthService {
   getUser(): Observable<firebase.User> {
     return this.afAuth.user;
   }
+
+  getDisplayName(): any {
+    this.afAuth.user.subscribe((user) => {
+      return user.displayName;
+    });
+  }
 }
