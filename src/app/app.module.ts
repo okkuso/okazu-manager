@@ -13,12 +13,20 @@ import { FavListComponent } from './fav-list/fav-list.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { TopHeaderComponent } from './top-header/top-header.component';
+import { TopHeaderContainerComponent } from './top-header-container/top-header-container.component';
+import { TopBodyComponent } from './top-body/top-body.component';
+import { TopBodyContainerComponent } from './top-body-container/top-body-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     FavListComponent,
+    TopHeaderComponent,
+    TopHeaderContainerComponent,
+    TopBodyComponent,
+    TopBodyContainerComponent,
   ],
   imports: [
     BrowserModule,

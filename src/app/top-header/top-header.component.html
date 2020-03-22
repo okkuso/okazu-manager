@@ -1,0 +1,10 @@
+<mat-toolbar class="header-toolbar" color="primary">
+  <mat-toolbar-row>
+    <mat-icon>bookmarks</mat-icon>
+    <span>おかずマネージャー</span>
+    <span>This is top-header</span>
+    <span class="header-spacer"></span>
+    <!-- 親コンポーネントであるTopHeaderContainerComponentに渡すイベントtopHeaderEventを着火する -->
+    <button mat-button (click)="topHeaderEvent.emit()">ログアウト</button>
+  </mat-toolbar-row>
+</mat-toolbar>

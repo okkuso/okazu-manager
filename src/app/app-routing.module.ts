@@ -9,8 +9,10 @@ const redirectLoggedInToTop = () => redirectLoggedInTo(['top']);
 
 const routes: Routes = [
   { path: '', component: TopPageComponent, canActivate: [AngularFireAuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} },
+
+  // test
+  // { path: '', component: TopPageComponent },
   { path: 'login', component: LoginPageComponent, canActivate: [AngularFireAuthGuard], data: {authGuardPipe: redirectLoggedInToTop} },
-  // { path: 'top', component: TopPageComponent, canActivate: [AngularFireAuthGuard], data: {authGuardPipe: redirectUnauthorizedToLogin} }
 ];
 
 @NgModule({
