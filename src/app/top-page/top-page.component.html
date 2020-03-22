@@ -1,4 +1,5 @@
 <p>top-page works!</p>
+<button mat-button (click)="logout()">logout</button>
 <mat-accordion>
 
   <mat-expansion-panel *ngFor="let user of users | async">
@@ -15,3 +16,10 @@
 
   </mat-expansion-panel>
 </mat-accordion>
+
+<div *ngIf="getAuthUser() | async as user; else showLogin">
+  <p>Hello, {{ user.displayName }}</p>
+</div>
+<ng-template #showLogin>
+  <p>not loginned</p>
+</ng-template>
