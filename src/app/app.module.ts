@@ -4,17 +4,21 @@ import { NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { FavListComponent } from './fav-list/fav-list.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
+import { AuthService } from './services/auth.service';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FavListComponent
+    routingComponents,
+    FavListComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,9 +26,11 @@ import { AppRoutingModule } from './app-routing.module';
     MaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AppRoutingModule
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

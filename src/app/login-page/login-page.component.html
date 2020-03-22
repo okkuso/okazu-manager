@@ -1,0 +1,8 @@
+<p>login-page works!</p>
+<button mat-button (click)="login()">login</button>
+<div *ngIf="afAuth.user | async as user; else showLogin">
+  <p>Hello, {{ user.displayName }}</p>
+</div>
+<ng-template #showLogin>
+  <button mat-button (click)="login()">login</button>
+</ng-template>
