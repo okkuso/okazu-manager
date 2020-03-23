@@ -30,4 +30,8 @@ export class CommonService {
 
     return this.testCollectionDocs = this.testCollection.valueChanges();
   }
+
+  insertUrl(testItem: Testcollection) {
+    this.testCollection.add(testItem);
+  }
 }

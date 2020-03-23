@@ -3,6 +3,16 @@
     <p>Welcome, {{ user.displayName }}! Id is {{ user.uid }}</p>
   </div>
 
+  <form #urlForm="ngForm" action="">
+    {{ urlForm.value | json }}
+    {{ bookmarkModel | json }}
+    <mat-form-field class="register-form">
+      <mat-label>Enter your fav URL</mat-label>
+      <input matInput [(ngModel)]='bookmarkModel.url' name="inputUrl" type="url" placeholder="https://www.favoritevideo.com">
+    </mat-form-field>
+    <button mat-button type="submit" (click)="topBodyEvent.emit()">登録</button>
+  </form>
+
   <mat-accordion>
     <mat-expansion-panel *ngFor="let user of users | async">
       <mat-expansion-panel-header>

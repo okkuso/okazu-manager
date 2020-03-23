@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../interfaces/user';
 import { Testcollection } from '../interfaces/testcollection';
 import { Observable } from 'rxjs';
+import { Bookmark } from '../models/bookmark';
 
 @Component({
   selector: 'app-top-body',
@@ -12,6 +13,8 @@ export class TopBodyComponent implements OnInit {
   @Input() loginUser: Observable<firebase.User>;
   @Input() users: Observable<User[]>;
   @Input() testCollectionItems: Observable<Testcollection[]>;
+  @Input() bookmarkModel: Bookmark;
+  @Output() topBodyEvent = new EventEmitter();
 
   constructor() { }
 

@@ -17,6 +17,7 @@ import { TopHeaderContainerComponent } from './top-header-container/top-header-c
 import { TopBodyComponent } from './top-body/top-body.component';
 import { TopBodyContainerComponent } from './top-body-container/top-body-container.component';
 import { CommonService } from './services/common.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CommonService } from './services/common.service';
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
     AppRoutingModule,
+    FormsModule,
   ],
   providers: [AuthService, CommonService],
   bootstrap: [AppComponent]
