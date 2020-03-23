@@ -30,9 +30,15 @@ export class AuthService {
     return this.afAuth.user;
   }
 
-  getDisplayName(): any {
+  async getDisplayName(): Promise<any> {
     this.afAuth.user.subscribe((user) => {
       return user.displayName;
+    });
+  }
+
+  async getUserId(): Promise<any> {
+    this.afAuth.user.subscribe((user) => {
+      return user.uid;
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../interfaces/user';
+import { Testcollection } from '../interfaces/testcollection';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 export class TopBodyComponent implements OnInit {
   @Input() loginUser: Observable<firebase.User>;
   @Input() users: Observable<User[]>;
+  @Input() testCollectionItems: Observable<Testcollection[]>;
 
   constructor() { }
 
