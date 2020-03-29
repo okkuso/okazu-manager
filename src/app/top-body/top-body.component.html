@@ -8,7 +8,8 @@
     {{ bookmarkModel | json }}
     <mat-form-field class="register-form">
       <mat-label>Enter your fav URL</mat-label>
-      <input matInput [(ngModel)]='bookmarkModel.url' name="inputUrl" type="url" placeholder="https://www.favoritevideo.com">
+      <input matInput [(ngModel)]="bookmarkModel.url" name="inputUrl" type="url" placeholder="https://www.favoritevideo.com">
+
     </mat-form-field>
     <button mat-button type="submit" (click)="topBodyEvent.emit()">登録</button>
   </form>

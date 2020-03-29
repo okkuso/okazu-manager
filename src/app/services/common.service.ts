@@ -33,5 +33,6 @@ export class CommonService {
 
   insertUrl(testItem: Testcollection) {
     this.testCollection.add(testItem);
+    console.log('item was added');
   }
 }

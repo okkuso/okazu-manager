@@ -3,6 +3,7 @@ import { User } from '../interfaces/user';
 import { Testcollection } from '../interfaces/testcollection';
 import { Observable } from 'rxjs';
 import { Bookmark } from '../models/bookmark';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-top-body',
@@ -15,6 +16,10 @@ export class TopBodyComponent implements OnInit {
   @Input() testCollectionItems: Observable<Testcollection[]>;
   @Input() bookmarkModel: Bookmark;
   @Output() topBodyEvent = new EventEmitter();
+
+  urlFormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   constructor() { }
 

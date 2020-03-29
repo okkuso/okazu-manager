@@ -14,6 +14,7 @@ import { Bookmark } from '../models/bookmark';
     [users]='users'
     [testCollectionItems]='testCollectionItems'
     [bookmarkModel]='bookmarkModel'
+    (topBodyEvent)='register()'
     ></app-top-body>
   `,
   styles: []
@@ -33,11 +34,19 @@ export class TopBodyContainerComponent implements OnInit {
     this.loginUser = this.authService.getUser();
     this.users = this.commonService.getUserList();
     this.testCollectionItems = this.commonService.getTestCollection();
-    this.bookmarkModel = new Bookmark('urlurl');
+    this.bookmarkModel = new Bookmark('', 'urlurl');
   }
 
-  register(testItem: Testcollection) {
+  register() {
     // this.commonService.insertUrl(testItem);
+    console.log('success');
+    const testItem: Testcollection = {
+      userId: 'HFOv99Wo1Fa49eQcOFKS6ZRI1Bb2',
+      url: 'test.com',
+      desc: 'test description'
+    };
+
+    this.commonService.insertUrl(testItem);
   }
 
 }
