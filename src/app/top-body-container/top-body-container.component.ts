@@ -34,19 +34,21 @@ export class TopBodyContainerComponent implements OnInit {
     this.loginUser = this.authService.getUser();
     this.users = this.commonService.getUserList();
     this.testCollectionItems = this.commonService.getTestCollection();
-    this.bookmarkModel = new Bookmark('', 'urlurl');
+    this.bookmarkModel = new Bookmark('testUid', 'testTitle', 'testurl', 'testDesc', new Date(), new Date(), false);
+    this.commonService.initLoginUserId();
   }
 
   register() {
     // this.commonService.insertUrl(testItem);
-    console.log('success');
-    const testItem: Testcollection = {
-      userId: 'HFOv99Wo1Fa49eQcOFKS6ZRI1Bb2',
-      url: 'test.com',
-      desc: 'test description'
-    };
+    // const testItem: Testcollection = {
+    //   userId: '',
+    //   url: 'test.com',
+    //   desc: 'test description'
+    // };
 
-    this.commonService.insertUrl(testItem);
+    // console.log('userId', testItem.userId);
+    // this.commonService.insertUrl(testItem);
+    this.commonService.addBookmark();
   }
 
 }

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
 import { Testcollection } from '../interfaces/testcollection';
+import { IBookmark } from '../interfaces/bookmark';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,19 @@ export class CommonService {
   users: Observable<User[]>;
   testCollection: AngularFirestoreCollection<Testcollection>;
   testCollectionDocs: Observable<Testcollection[]>;
+  loginUserId: string;
+  bookmarkCollection: AngularFirestoreCollection<IBookmark>;
 
-  constructor(private db: AngularFirestore) { }
+  constructor(
+    private db: AngularFirestore,
+    private authService: AuthService,
+    ) {
+      this.bookmarkCollection = this.db.collection('bookmarks');
+    }
 
   getUserList(): Observable<User[]> {
     this.userCollection = this.db.collection('users');
+
     return this.users = this.userCollection.valueChanges();
   }
 
@@ -32,7 +42,41 @@ export class CommonService {
   }
 
   insertUrl(testItem: Testcollection) {
+    testItem.userId = this.loginUserId;
     this.testCollection.add(testItem);
-    console.log('item was added');
+    // console.log('item was added');
+    console.log('User ID: ', testItem.userId);
+  }
+
+  initLoginUserId() {
+    this.authService.getUser().subscribe(user => {
+      this.loginUserId = user.uid;
+    });
+  }
+
+  getBookmark() {
+
+  }
+
+  addBookmark() {
+    const addedData: IBookmark = {
+      userId: this.loginUserId,
+      title: 'testBookmark2',
+      url: 'test.bookmark2',
+      description: 'this is test bookmark2',
+      createdDate: new Date(),
+      updatedDate: new Date(),
+      isDeleted: false,
+    };
+
+    this.bookmarkCollection.add(addedData);
+  }
+
+  updateBookmark() {
+
+  }
+
+  deleteBookmark() {
+
   }
 }
