@@ -4,6 +4,8 @@ import { Testcollection } from '../interfaces/testcollection';
 import { Observable } from 'rxjs';
 import { Bookmark } from '../models/bookmark';
 import { FormControl, Validators } from '@angular/forms';
+import { BookmarkInputForm } from '../models/bookmark-input-form';
+import { IBookmark } from '../interfaces/bookmark';
 
 @Component({
   selector: 'app-top-body',
@@ -15,6 +17,8 @@ export class TopBodyComponent implements OnInit {
   @Input() users: Observable<User[]>;
   @Input() testCollectionItems: Observable<Testcollection[]>;
   @Input() bookmarkModel: Bookmark;
+  @Input() bookmarkInputForm: BookmarkInputForm;
+  @Input() bookmarks: Observable<IBookmark[]>;
   @Output() topBodyEvent = new EventEmitter();
 
   urlFormControl = new FormControl('', [

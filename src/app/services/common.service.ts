@@ -5,6 +5,7 @@ import { Testcollection } from '../interfaces/testcollection';
 import { IBookmark } from '../interfaces/bookmark';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { BookmarkInputForm } from '../models/bookmark-input-form';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,22 @@ import { AuthService } from './auth.service';
 export class CommonService {
   userCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
+  bookmarks: Observable<IBookmark[]>;
   testCollection: AngularFirestoreCollection<Testcollection>;
   testCollectionDocs: Observable<Testcollection[]>;
   loginUserId: string;
-  bookmarkCollection: AngularFirestoreCollection<IBookmark>;
+  bookmarksCollection: AngularFirestoreCollection<IBookmark>;
 
   constructor(
     private db: AngularFirestore,
     private authService: AuthService,
-    ) {
-      this.bookmarkCollection = this.db.collection('bookmarks');
+  ) {
+      this.bookmarksCollection = this.db.collection('bookmarks');
     }
+
+  getBookmarksCollection(): Observable<any> {
+    return this.bookmarks = this.bookmarksCollection.valueChanges();
+  }
 
   getUserList(): Observable<User[]> {
     this.userCollection = this.db.collection('users');
@@ -58,18 +64,18 @@ export class CommonService {
 
   }
 
-  addBookmark() {
+  addBookmark(bookmarkInput: BookmarkInputForm) {
     const addedData: IBookmark = {
       userId: this.loginUserId,
-      title: 'testBookmark2',
-      url: 'test.bookmark2',
-      description: 'this is test bookmark2',
+      title: bookmarkInput.title,
+      url: bookmarkInput.url,
+      description: bookmarkInput.description,
       createdDate: new Date(),
       updatedDate: new Date(),
       isDeleted: false,
     };
 
-    this.bookmarkCollection.add(addedData);
+    this.bookmarksCollection.add(addedData);
   }
 
   updateBookmark() {

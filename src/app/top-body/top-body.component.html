@@ -4,15 +4,37 @@
   </div>
 
   <form #urlForm="ngForm" action="">
-    {{ urlForm.value | json }}
-    {{ bookmarkModel | json }}
+    <!-- {{ urlForm.value | json }}
+    {{ bookmarkModel | json }} -->
     <mat-form-field class="register-form">
-      <mat-label>Enter your fav URL</mat-label>
-      <input matInput [(ngModel)]="bookmarkModel.url" name="inputUrl" type="url" placeholder="https://www.favoritevideo.com">
-
+      <mat-label>Enter Title</mat-label>
+      <input matInput [(ngModel)]="bookmarkInputForm.title" name="inputTitle" placeholder="A girl is ...">
+    </mat-form-field>
+    <mat-form-field class="register-form">
+      <mat-label>Enter URL</mat-label>
+      <input matInput [(ngModel)]="bookmarkInputForm.url" name="inputUrl" type="url" placeholder="https://www.favoritevideo.com">
+    </mat-form-field>
+    <mat-form-field class="register-form">
+      <mat-label>Enter Description</mat-label>
+      <input matInput [(ngModel)]="bookmarkInputForm.description" name="inputDesc" placeholder="this is XXX">
     </mat-form-field>
     <button mat-button type="submit" (click)="topBodyEvent.emit()">登録</button>
   </form>
+
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let bookmark of bookmarks | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ bookmark.title }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ bookmark.url }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{ bookmark.description }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
 
   <mat-accordion>
     <mat-expansion-panel *ngFor="let user of users | async">
