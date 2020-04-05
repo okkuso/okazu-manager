@@ -18,7 +18,7 @@
       <mat-label>Enter Description</mat-label>
       <input matInput [(ngModel)]="bookmarkInputForm.description" name="inputDesc" placeholder="this is XXX">
     </mat-form-field>
-    <button mat-button type="submit" (click)="topBodyEvent.emit()">登録</button>
+    <button mat-button type="submit" (click)="addBookmark.emit()">登録</button>
   </form>
 
 
@@ -33,10 +33,13 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <p>{{ bookmark.description }}</p>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="deleteBookmark.emit(bookmark)">Delete</button>
+      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-accordion>
+  <!-- <mat-accordion>
     <mat-expansion-panel *ngFor="let user of users | async">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -63,4 +66,4 @@
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
   </mat-accordion>
-</div>
+</div> -->

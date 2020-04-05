@@ -19,7 +19,8 @@ export class TopBodyComponent implements OnInit {
   @Input() bookmarkModel: Bookmark;
   @Input() bookmarkInputForm: BookmarkInputForm;
   @Input() bookmarks: Observable<IBookmark[]>;
-  @Output() topBodyEvent = new EventEmitter();
+  @Output() addBookmark = new EventEmitter();
+  @Output() deleteBookmark = new EventEmitter<IBookmark>();
 
   urlFormControl = new FormControl('', [
     Validators.required

@@ -1,4 +1,5 @@
 export interface IBookmark {
+  id?: string;
   userId: string;
   title: string;
   url: string;

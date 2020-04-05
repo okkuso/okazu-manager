@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument, DocumentChangeAction } from '@angular/fire/firestore';
 import { User } from '../interfaces/user';
 import { Testcollection } from '../interfaces/testcollection';
 import { IBookmark } from '../interfaces/bookmark';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { BookmarkInputForm } from '../models/bookmark-input-form';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,14 @@ export class CommonService {
     }
 
   getBookmarksCollection(): Observable<any> {
-    return this.bookmarks = this.bookmarksCollection.valueChanges();
+    // return this.bookmarks = this.bookmarksCollection.valueChanges();
+    return this.bookmarks = this.bookmarksCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IBookmark;
+        data.id = a.payload.doc.id;
+        return data;
+      }))
+    );
   }
 
   getUserList(): Observable<User[]> {
@@ -82,7 +90,8 @@ export class CommonService {
 
   }
 
-  deleteBookmark() {
+  deleteBookmark(docId: string) {
+    this.bookmarksCollection.doc(docId).delete();
 
   }
 }

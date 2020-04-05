@@ -18,7 +18,8 @@ import { IBookmark } from '../interfaces/bookmark';
     [bookmarks]='bookmarksCollectionItems'
     [bookmarkModel]='bookmarkModel'
     [bookmarkInputForm]='bookmarkInputForm'
-    (topBodyEvent)='register()'
+    (addBookmark)='register()'
+    (deleteBookmark)='delete($event)'
     ></app-top-body>
   `,
   styles: []
@@ -59,6 +60,12 @@ export class TopBodyContainerComponent implements OnInit {
 
     console.log(this.bookmarkInputForm);
     this.commonService.addBookmark(this.bookmarkInputForm);
+  }
+
+  delete(selected: IBookmark) {
+    // this.commonService.deleteBookmark(this.bookmarksCollectionItems.);
+    console.log('delete() is called');
+    console.log('Bookmark', selected);
   }
 
 }
