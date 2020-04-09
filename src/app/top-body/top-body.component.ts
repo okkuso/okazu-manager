@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { User } from '../interfaces/user';
-import { Testcollection } from '../interfaces/testcollection';
 import { Observable } from 'rxjs';
-import { Bookmark } from '../models/bookmark';
+import { Bookmark } from '../classes/bookmark';
 import { FormControl, Validators } from '@angular/forms';
-import { BookmarkInputForm } from '../models/bookmark-input-form';
+import { BookmarkInputForm } from '../classes/bookmark-input-form';
 import { IBookmark } from '../interfaces/bookmark';
 
 @Component({
@@ -13,18 +11,16 @@ import { IBookmark } from '../interfaces/bookmark';
   styleUrls: ['./top-body.component.scss']
 })
 export class TopBodyComponent implements OnInit {
-  @Input() loginUser: Observable<firebase.User>;
-  @Input() users: Observable<User[]>;
-  @Input() testCollectionItems: Observable<Testcollection[]>;
-  @Input() bookmarkModel: Bookmark;
+  @Input() loginUser: firebase.User;
   @Input() bookmarkInputForm: BookmarkInputForm;
   @Input() bookmarks: Observable<IBookmark[]>;
   @Output() addBookmark = new EventEmitter();
   @Output() deleteBookmark = new EventEmitter<IBookmark>();
+  @Output() openBookmark = new EventEmitter<string>();
 
-  urlFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  // urlFormControl = new FormControl('', [
+  //   Validators.required
+  // ]);
 
   constructor() { }
 

@@ -1,22 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument, DocumentChangeAction } from '@angular/fire/firestore';
-import { User } from '../interfaces/user';
-import { Testcollection } from '../interfaces/testcollection';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { IBookmark } from '../interfaces/bookmark';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { BookmarkInputForm } from '../models/bookmark-input-form';
+import { BookmarkInputForm } from '../classes/bookmark-input-form';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
-  userCollection: AngularFirestoreCollection<User>;
-  users: Observable<User[]>;
   bookmarks: Observable<IBookmark[]>;
-  testCollection: AngularFirestoreCollection<Testcollection>;
-  testCollectionDocs: Observable<Testcollection[]>;
   loginUserId: string;
   bookmarksCollection: AngularFirestoreCollection<IBookmark>;
 
@@ -24,57 +18,33 @@ export class CommonService {
     private db: AngularFirestore,
     private authService: AuthService,
   ) {
-      this.bookmarksCollection = this.db.collection('bookmarks');
-    }
+      // this.bookmarksCollection = this.db.collection('bookmarks', ref => {
+      //   return ref.where('userId', '==', this.authService.getCurrentUserId());
+      // });
+  }
 
-  getBookmarksCollection(): Observable<any> {
-    // return this.bookmarks = this.bookmarksCollection.valueChanges();
+  initCollectionByCurrentUser() {
+    this.bookmarksCollection = this.db.collection('bookmarks', ref => {
+      return ref.where('userId', '==', this.authService.getCurrentUserId());
+    });
+  }
+
+  getBookmarksCollectionItems(): Observable<any> {
     return this.bookmarks = this.bookmarksCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IBookmark;
-        data.id = a.payload.doc.id;
-        return data;
-      }))
-    );
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as IBookmark;
+          data.id = a.payload.doc.id;
+          console.log('data in common.service', data);
+          return data;
+        }))
+      );
   }
-
-  getUserList(): Observable<User[]> {
-    this.userCollection = this.db.collection('users');
-
-    return this.users = this.userCollection.valueChanges();
-  }
-
-  getTestCollection(): Observable<any> {
     // https://cloud.google.com/firestore/docs/query-data/queries
     // https://stackoverflow.com/questions/52331835/collection-reference-cast-to-angularfirestorecollection-or-observable
-    this.testCollection = this.db.collection('test-collection', ref => {
-      return ref.where('userId', '==', 'HFOv99Wo1Fa49eQcOFKS6ZRI1Bb2');
-    });
-    // this.testCollection = this.db.collection('test-collection');
 
-    return this.testCollectionDocs = this.testCollection.valueChanges();
-  }
-
-  insertUrl(testItem: Testcollection) {
-    testItem.userId = this.loginUserId;
-    this.testCollection.add(testItem);
-    // console.log('item was added');
-    console.log('User ID: ', testItem.userId);
-  }
-
-  initLoginUserId() {
-    this.authService.getUser().subscribe(user => {
-      this.loginUserId = user.uid;
-    });
-  }
-
-  getBookmark() {
-
-  }
-
-  addBookmark(bookmarkInput: BookmarkInputForm) {
+  addBookmark(bookmarkInput: BookmarkInputForm): boolean {
     const addedData: IBookmark = {
-      userId: this.loginUserId,
+      userId: this.authService.getCurrentUserId(),
       title: bookmarkInput.title,
       url: bookmarkInput.url,
       description: bookmarkInput.description,
@@ -83,7 +53,13 @@ export class CommonService {
       isDeleted: false,
     };
 
-    this.bookmarksCollection.add(addedData);
+    try {
+      this.bookmarksCollection.add(addedData);
+    } catch (error) {
+      console.log('add() Error', error);
+    }
+    console.log('Added successfully.');
+    return true;
   }
 
   updateBookmark() {
@@ -92,6 +68,13 @@ export class CommonService {
 
   deleteBookmark(docId: string) {
     this.bookmarksCollection.doc(docId).delete();
+  }
 
+  openBookmark(url: string) {
+    const isSuccess = window.open(url);
+    if (!isSuccess) {
+      window.close();
+      console.log('Failed to open the url.');
+    }
   }
 }

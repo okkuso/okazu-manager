@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../services/common.service';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user';
-import { Testcollection } from '../interfaces/testcollection';
 import { AuthService } from '../services/auth.service';
-import { Bookmark } from '../models/bookmark';
-import { BookmarkInputForm } from '../models/bookmark-input-form';
+import { Bookmark } from '../classes/bookmark';
+import { BookmarkInputForm } from '../classes/bookmark-input-form';
 import { IBookmark } from '../interfaces/bookmark';
 
 @Component({
@@ -13,23 +11,18 @@ import { IBookmark } from '../interfaces/bookmark';
   template: `
     <app-top-body
     [loginUser]='loginUser'
-    [users]='users'
-    [testCollectionItems]='testCollectionItems'
     [bookmarks]='bookmarksCollectionItems'
-    [bookmarkModel]='bookmarkModel'
     [bookmarkInputForm]='bookmarkInputForm'
     (addBookmark)='register()'
     (deleteBookmark)='delete($event)'
+    (openBookmark)='openBookmark($event)'
     ></app-top-body>
   `,
   styles: []
 })
 export class TopBodyContainerComponent implements OnInit {
-  users: Observable<User[]>;
-  loginUser: Observable<firebase.User>;
-  testCollectionItems: Observable<Testcollection[]>;
+  loginUser: firebase.User;
   bookmarksCollectionItems: Observable<IBookmark[]>;
-  bookmarkModel: Bookmark;
   bookmarkInputForm: BookmarkInputForm;
 
   constructor(
@@ -38,34 +31,30 @@ export class TopBodyContainerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loginUser = this.authService.getUser();
-    this.users = this.commonService.getUserList();
-    this.testCollectionItems = this.commonService.getTestCollection();
-    this.bookmarksCollectionItems = this.commonService.getBookmarksCollection();
-    this.bookmarkModel = new Bookmark('testUid', 'testTitle', 'testurl', 'testDesc', new Date(), new Date(), false);
+    this.loginUser = this.authService.getCurrentUser();
+    this.bookmarksCollectionItems = this.commonService.getBookmarksCollectionItems();
     this.bookmarkInputForm = new BookmarkInputForm('', '', '');
-    this.commonService.initLoginUserId();
   }
 
-  register() {
-    // this.commonService.insertUrl(testItem);
-    // const testItem: Testcollection = {
-    //   userId: '',
-    //   url: 'test.com',
-    //   desc: 'test description'
-    // };
-
-    // console.log('userId', testItem.userId);
-    // this.commonService.insertUrl(testItem);
-
-    console.log(this.bookmarkInputForm);
-    this.commonService.addBookmark(this.bookmarkInputForm);
+  register(): void {
+    const isSuccess = this.commonService.addBookmark(this.bookmarkInputForm);
+    if (isSuccess) {
+      this.initBookmarkInput();
+    }
   }
 
-  delete(selected: IBookmark) {
-    // this.commonService.deleteBookmark(this.bookmarksCollectionItems.);
-    console.log('delete() is called');
-    console.log('Bookmark', selected);
+  delete(docId: string): void {
+    this.commonService.deleteBookmark(docId);
+  }
+
+  initBookmarkInput() {
+    this.bookmarkInputForm.url = '';
+    this.bookmarkInputForm.title = '';
+    this.bookmarkInputForm.description = '';
+  }
+
+  openBookmark(url: string) {
+    this.commonService.openBookmark(url);
   }
 
 }

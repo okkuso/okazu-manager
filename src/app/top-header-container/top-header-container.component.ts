@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
     <!-- 子コンポーネントであるTopHeaderComponentからイベントをキャッチしたら、logoutメソッドを呼ぶ -->
     <app-top-header (topHeaderEvent)="logout()"></app-top-header>
   `,
+  styles: []
 })
 export class TopHeaderContainerComponent implements OnInit {
 

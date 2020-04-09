@@ -1,11 +1,9 @@
 <div class="top-body-wrapper">
-  <div *ngIf="loginUser | async as user">
-    <p>Welcome, {{ user.displayName }}! Id is {{ user.uid }}</p>
+  <div *ngIf="loginUser">
+    <p>Welcome, {{ loginUser.displayName }}! Id is {{ loginUser.uid }}</p>
   </div>
 
   <form #urlForm="ngForm" action="">
-    <!-- {{ urlForm.value | json }}
-    {{ bookmarkModel | json }} -->
     <mat-form-field class="register-form">
       <mat-label>Enter Title</mat-label>
       <input matInput [(ngModel)]="bookmarkInputForm.title" name="inputTitle" placeholder="A girl is ...">
@@ -29,41 +27,15 @@
           {{ bookmark.title }}
         </mat-panel-title>
         <mat-panel-description>
+          <a href="{{ bookmark.url }}">{{ bookmark.url }}</a>
           {{ bookmark.url }}
         </mat-panel-description>
+        <button mat-button color="primary" (click)="openBookmark.emit(bookmark.url)">新しいタブで開く</button>
       </mat-expansion-panel-header>
       <p>{{ bookmark.description }}</p>
       <mat-action-row>
-        <button mat-button color="warn" (click)="deleteBookmark.emit(bookmark)">Delete</button>
+        <button mat-button color="warn" (click)="deleteBookmark.emit(bookmark.id)">Delete</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
 
-  <!-- <mat-accordion>
-    <mat-expansion-panel *ngFor="let user of users | async">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ user.name }}
-        </mat-panel-title>
-        <mat-panel-description>
-          This is a summary of the content
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
-    </mat-expansion-panel>
-  </mat-accordion>
-
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let item of testCollectionItems | async">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ item.url }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ item.desc }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div> -->
